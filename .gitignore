@@ -3,3 +3,4 @@ sandbox.py
 __pycache__/
 .vscode/
 .env
+data_mining/data/queue.txt
