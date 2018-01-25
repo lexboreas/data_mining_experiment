@@ -22,10 +22,5 @@ SECTIONS = [
         'handler' : 'show_message',
     },
 ]
----------
 
-
-Local Postgresql:
-pg_ctl -D /usr/local/var/postgres start
-pg_ctl -D /usr/local/var/postgres stop
 
