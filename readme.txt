@@ -24,3 +24,10 @@ SECTIONS = [
 ]
 
 
+Testing with unittest
+---------
+Run a single test:
+$ python -m unittest test.test_handlers
+
+Run all the tests:
+$ python -m unittest discover

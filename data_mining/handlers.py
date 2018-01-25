@@ -46,9 +46,3 @@ class Handlers():
     def handler_function_not_defined(self, message):
         """ executed when handler in config but not in Handlers """
         pass
-
-if __name__ == '__main__':
-    pass
-    # x = db_connection_url()
-    # print(x)
-    #create_db_schema()
