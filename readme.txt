@@ -1,4 +1,4 @@
-Experimenting with data mining, Twitter API, feeds ...
+Experimenting with data mining, Twitter API ...
 Do not use any part of this app in production.  It's not threadsafe, not fast and full of bugs.
 
 
@@ -12,16 +12,19 @@ ACCESS_TOKEN_SECRET = "..."
 
 SECTIONS = [
     {
-        'name': 'bitcoins',
-        'search_terms' : ['#btc', '#bitcoin', '#ltc', '#litecoin', '#eth', '#cryptocurrency'],
-        'handler' : 'add_to_archive',
+        'name': 'presidents',
+        'search_terms' : ['merkel', 'trump', 'putin'],
+        'handler' : 'handle_presidents',
     },
     {
-        'name:': 'elections',
-        'search_terms' : ['trump', 'clinton'],
-        'handler' : 'show_message',
+        'name': 'bitcoins',
+        'search_terms' : ['btc', 'bitcoin', 'ltc', 'litecoin', 'eth', 'cryptocurrency'],
+        'handler' : 'handle_cryptocurrency',
     },
 ]
+
+# Db to archive data
+DATABASE_URL = 'postgresql://localhost/queue_archive'
 
 
 Testing with unittest

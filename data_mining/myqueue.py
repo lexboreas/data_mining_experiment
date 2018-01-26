@@ -2,7 +2,6 @@ import os
 import json
 
 # Helpers
-
 _BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 def get_queue_file_path(path):
     return os.path.join(_BASE_PATH, 'data', path)
@@ -63,4 +62,3 @@ class InQueue():
     def receive_message(self):
         for message in self._get_messages():
             yield message
-        self._empty_queue()   

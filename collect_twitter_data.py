@@ -2,7 +2,7 @@
 """
 Collect data from twitter.
 Send data to queue. I use file queue.txt to simplify/for demonstration.
-In production use service like Amazon SQS.
+In production use services like Amazon SQS.
 """
 
 import json
@@ -28,6 +28,7 @@ def log_error(message):
     
 
 class MyStreamListener(StreamListener):
+    """ Handles tweets that are received from the stream. """
 
     def __init__(self, queue, name='', time_limit_seconds=None, number_limit=None): 
         """ Send twitts to queue. Queue instance must have send_message(message) method
@@ -76,17 +77,15 @@ def collect_data(conf_section, time_limit=None, number_limit=None):
     stream_listener = MyStreamListener(queue=OutQueue(), name=conf_section['name'], \
                                        time_limit_seconds=time_limit, number_limit=number_limit)
     stream = Stream(auth, stream_listener)
-
     stream.filter(languages=["en"], track=conf_section['search_terms'])
     return stream_listener.twitts_collected()
 
 if __name__ == '__main__':
-    """ Example: collect_twitter_data.py elections """
     try:
-        config_section = next((section for section in conf.SECTIONS if section["name"] == sys.argv[1]))
+        conf_section = next((section for section in conf.SECTIONS if section["name"] == sys.argv[1]))
     except (IndexError, StopIteration):
-        config_section = conf.SECTIONS[0] #default: first config section
+        conf_section = conf.SECTIONS[0] #default: first config section
  
-    print("Collecting twitts for {}: {}".format(config_section['name'], config_section['search_terms']))
-    twitts_collected = collect_data(conf_section=config_section, number_limit=30) # or limit by time
+    print("Collecting twitts for {}: {}".format(conf_section['name'], conf_section['search_terms']))
+    twitts_collected = collect_data(conf_section=conf_section, number_limit=30) # or limit by time
     print("Collected: {}".format(twitts_collected))
