@@ -1,3 +1,2 @@
-from .myqueue import OutQueue
-from .myqueue import InQueue
+from .myqueue import OutQueue, InQueue
 from .handlers import Handlers

@@ -62,3 +62,4 @@ class InQueue():
     def receive_message(self):
         for message in self._get_messages():
             yield message
+        self._empty_queue()

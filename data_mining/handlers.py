@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import os
 import re
-
+from textblob import TextBlob
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Table, Column, Integer, DateTime, Text
@@ -45,20 +45,30 @@ def collect_urls_from(text):
     urls = re.findall(url_regex, text)
     return urls
 
+def get_sentiment_from(text):
+   return TextBlob(text).sentiment.polarity
+
 class Handlers():
     """ Message handlers: function names same as handler param in config.py """
     def __init__(self, conf):
         self.conf = conf
         self.votes = {} # handle_presidents 
         self.urls = []  # handle_cryptocurrency
+        self.sentiment_value = 0 # neutral
     
     def handle_presidents(self, message):
         section = get_section_by_name(message['section'], self.conf.SECTIONS)
+        # count votes
         for name in section['search_terms']:
             self.votes[name] = self.votes.get(name, 0) + count_word_in_text(name, message['body'])
  
     def handle_cryptocurrency(self, message):
-        self.urls = collect_urls_from(message['body']) + self.urls 
+        message_text = message['body']
+        # collect urls
+        self.urls = collect_urls_from(message_text) + self.urls
+        # calc sentiment value
+        self.sentiment_value = (get_sentiment_from(message_text) + self.sentiment_value)/2
+        # archive it
         add_to_archive(message, self.conf.DATABASE_URL)
 
     def handle_not_defined_handler(self, message):

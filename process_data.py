@@ -44,18 +44,30 @@ if __name__ == '__main__':
     qrunner = QueueRunner(my_queue, config)
     processed = qrunner.process_all_messages()
     print("Processed:", processed)
-
     def presidents_popularity_in_media(votes):
         if bool(votes):
             print("Votes: {}".format(votes))
             winner = max(votes, key=votes.get)
-            print("{} win this round".format(winner.capitalize()))
+            print("Presidents popularity in media: {} win this round\n".format(winner.capitalize()))
 
     presidents_popularity_in_media(qrunner.handlers.votes)
 
     def print_crypto_urls(urls):
         if urls:
             urls = list(set(urls)) # remove dubs
-            print("Crypto urls:", "\n".join(urls))
+            print("Crypto urls:\n{}".format("\n".join(urls)))
 
     print_crypto_urls(qrunner.handlers.urls)
+
+    def print_sentiment(sentiment_value):
+        if sentiment_value:
+            if sentiment_value > 0:
+                sentiment = "positive"
+            elif sentiment_value == 0:
+                sentiment = "neutral"
+            else:
+                sentiment = "negative"
+            print("Crypto sentiment: {} ({:0.2f})".format(sentiment, sentiment_value))
+
+    #print("Sentiment for {}".format§())
+    print_sentiment(qrunner.handlers.sentiment_value)
