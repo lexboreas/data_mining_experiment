@@ -1,6 +1,12 @@
 Experimenting with data mining, Twitter API ...
 Do not use any part of this app in production.  It's not threadsafe, not fast and full of bugs.
 
+Collect twitter data:
+% python collect_twitter_data bitcoins
+% python collect_twitter_data presidents
+
+Process data:
+% python process_data.py
 
 config.py example:
 ---------
